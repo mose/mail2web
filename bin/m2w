@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require 'mail'
+require 'tempfile'
+
+content = ARGF.read
+tmpfile = Tempfile.new('mail-')
+tmpfile.write content
+tmpfile.close
+
+puts tmpfile.path
+
+# tmpfile.unlink
