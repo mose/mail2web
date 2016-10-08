@@ -3,11 +3,17 @@
 require 'mail'
 require 'tempfile'
 
+DEBUG = true
+
 content = ARGF.read
 tmpfile = Tempfile.new('mail-')
 tmpfile.write content
 tmpfile.close
 
-puts tmpfile.path
+mail = Mail.read tmpfile.path
 
-# tmpfile.unlink
+if mail.multipart?
+  puts "#{mail.parts.map { |p| p.content_type }.join("\n")}" if DEBUG
+else
+  puts 'no parts' if DEBUG
+end
