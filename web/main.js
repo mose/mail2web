@@ -11,9 +11,9 @@ function addTo(el, txt) {
 }
 
 function build_nav(els) {
-  var navitems = document.querySelectorAll('ul.nav');
+  var navitems = document.querySelector('ul.nav');
   if (els.length === 0) {
-
+    addTo(navitems, '<li>' + item + '</li>')
   } else {
     Array.prototype.forEach.call(els, (item, k) => {
       addTo(navitems, '<li>' + item + '</li>')
