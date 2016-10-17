@@ -6,8 +6,33 @@ function ready(fn) {
   }
 }
 
-function addTo(el, txt) {
-  el.insertAdjacentHTML("beforeend", txt);
+function show_dir(focus) {
+  var all_dirs = document.querySelectorAll('ul.nav li ul');
+  Array.prototype.forEach.call(all_dirs, (el, k) => {
+    el.parentNode.removeChild(el);
+  });
+  var ulwrap = document.createElement('ul');
+  fetch('json/' + focus.id + '.json').
+    then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        return {};
+      }
+    }).
+    then(els => {
+      Array.prototype.forEach.call(Object.keys(els), (item, k) => {
+        var it = els[item];
+        var itemli = document.createElement('li');
+        var itemlink = document.createElement('a');
+        itemlink.href = 'mails/' + it.id + '.html';
+        itemlink.target = 'content';
+        itemlink.textContent = it.subject;
+        itemli.appendChild(itemlink);
+        ulwrap.appendChild(itemli);
+      });
+      focus.appendChild(ulwrap);
+    });
 }
 
 function build_nav(els) {
@@ -16,14 +41,20 @@ function build_nav(els) {
     addTo(navitems, '<li>' + item + '</li>')
   } else {
     Array.prototype.forEach.call(els, (item, k) => {
-      addTo(navitems, '<li>' + item + '</li>')
+      var dirlink = document.createElement('li');
+      dirlink.id = item;
+      dirlink.textContent = item;
+      navitems.appendChild(dirlink);
+      dirlink.addEventListener('click', (ev) => {
+        show_dir(dirlink);
+      });
     });
   }
 }
 
 ready( () => {
 
-  fetch('json/dirs.json', { mode: 'no-cors' }).
+  fetch('json/dirs.json').
     then(response => {
       if (response.ok) {
         return response.json();

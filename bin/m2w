@@ -1,13 +1,14 @@
 #!/usr/bin/env ruby
 
+require 'uri'
 require 'json'
 require 'mail'
 require 'tempfile'
 require 'awesome_print'
 
-DEBUG = true
+DEBUG = false
 DATE_FORMAT = "%Y-%W"
-KEY_FORMAT = "%FT%R"
+KEY_FORMAT = "%FT%T"
 
 content = ARGF.read
 tmpfile = Tempfile.new('mail-')
@@ -26,13 +27,13 @@ dirfile = 'web/json/dirs.json'
 if File.exists?(dirfile)
   dirs = JSON.parse(File.read dirfile)
 else
-  dire = []
+  dirs = []
 end
 
 unless dirs.include?(datestamp)
   dirs.push datestamp
   dirs.sort
-  File.open('web/json/dirs.json', 'w') do |f|
+  File.open(dirfile, 'w') do |f|
     f.write(dirs.to_json)
   end
 end
@@ -43,8 +44,23 @@ else
   data = {}
 end
 
+def urlize(txt)
+  note.split.each do |word|
+    if word =~ URI::regexp
+      '<a href="' + word + '">' + word + '</a>'
+    else
+      word
+    end
+  end.join ' '
+end
+
 def to_html(text)
-  text
+  back = '<pre>'
+  text.each_line do |line|
+    back += urlize(line) + "\n"
+  end
+  back += '</pre>'
+  return back
 end
 
 if mail.multipart?
@@ -53,3 +69,14 @@ else
   content = to_html(mail.body.to_s)
 end
 
+data[keystamp] = {
+  id: mail.message_id,
+  date: keystamp,
+  from: mail.from.first,
+  subject: mail.subject,
+  content: content
+}
+
+File.open(storefile, 'w') do |f|
+  f.write(data.to_json)
+end
