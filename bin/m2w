@@ -73,10 +73,13 @@ data[keystamp] = {
   id: mail.message_id,
   date: keystamp,
   from: mail.from.first,
-  subject: mail.subject,
-  content: content
+  subject: mail.subject
 }
 
 File.open(storefile, 'w') do |f|
   f.write(data.to_json)
+end
+
+File.open("web/mails/#{mail.message_id}.html", 'w') do |f|
+  f.write(content)
 end

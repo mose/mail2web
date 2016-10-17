@@ -1,4 +1,4 @@
-/mails/*.html
+/web/mails/*.html
 /vendor
 /.bundle
 /web/json/*.json
