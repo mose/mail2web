@@ -17,7 +17,21 @@ li {
 ul.nav > li {
   cursor: pointer;
 }
-li li a {
+ul.nav > li:hover {
+  background-color: #ba7;
+}
+ul.nav li ul li {
+  background-color: #fff;
+  margin-bottom: 2px;
+}
+ul.nav li ul li:hover {
+  background-color: #000;
+}
+ul.nav li ul li:hover a {
+  color: #fff;
+}
+
+ul.nav li ul li a {
   text-decoration: none;
 }
 </style>

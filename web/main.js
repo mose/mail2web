@@ -28,6 +28,7 @@ function show_dir(focus) {
         itemlink.href = 'mails/' + it.id + '.html';
         itemlink.target = 'content';
         itemlink.textContent = it.subject;
+        itemlink.title = it.date + ' from ' + it.from;
         itemli.appendChild(itemlink);
         ulwrap.appendChild(itemli);
       });
