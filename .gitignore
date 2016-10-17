@@ -2,3 +2,4 @@
 /mails/*.html
 /vendor
 /.bundle
+/web/json/*.json
