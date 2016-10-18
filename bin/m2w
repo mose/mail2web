@@ -9,6 +9,10 @@ require 'awesome_print'
 DEBUG = false
 DATE_FORMAT = "%Y-%W"
 KEY_FORMAT = "%F %T"
+BASEDIR = File.expand_path(File.join(__FILE__, '../../'))
+
+puts BASEDIR
+exit 0
 
 content = ARGF.read
 tmpfile = Tempfile.new('mail-')
@@ -21,8 +25,8 @@ ap mail.methods if DEBUG
 
 datestamp = mail.date.strftime DATE_FORMAT
 keystamp = mail.date.strftime KEY_FORMAT
-storefile = "web/json/#{datestamp}.json"
-dirfile = 'web/json/dirs.json'
+storefile = File.join(BASEDIR, "web/json/#{datestamp}.json")
+dirfile = File.join(BASEDIR, 'web/json/dirs.json')
 
 if File.exists?(dirfile)
   dirs = JSON.parse(File.read dirfile)
@@ -81,6 +85,6 @@ File.open(storefile, 'w') do |f|
   f.write(data.to_json)
 end
 
-File.open("web/mails/#{mail.message_id}.html", 'w') do |f|
+File.open(File.join(BASEDIR, "web/mails/#{mail.message_id}.html"), 'w') do |f|
   f.write(content)
 end
