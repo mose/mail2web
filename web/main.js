@@ -39,7 +39,7 @@ function show_dir(focus) {
 function build_nav(els) {
   var navitems = document.querySelector('ul.nav');
   if (els.length === 0) {
-    navitems.appendChild('<li>' + item + '</li>');
+    navitems.appendChild('<li>Nothing yet</li>');
   } else {
     Array.prototype.forEach.call(els, (item, k) => {
       var dirlink = document.createElement('li');
