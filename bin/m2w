@@ -37,8 +37,8 @@ unless dirs.include?(datestamp)
   File.open(dirfile, 'w') do |f|
     f.write(dirs.to_json)
   end
-  File.chmod(0644, dirfile)
 end
+FileUtils.chmod(0644, dirfile)
 
 if File.exists?(storefile)
   data = JSON.parse(File.read storefile)
@@ -82,10 +82,10 @@ data = data.sort.to_h
 File.open(storefile, 'w') do |f|
   f.write(data.to_json)
 end
-File.chmod(0644, storefile)
+FileUtils.chmod(0644, storefile)
 
 msgfile = File.join(BASEDIR, "web/mails/#{mail.message_id}.html")
 File.open(msgfile, 'w') do |f|
   f.write(content)
 end
-File.chmod(0644, msgfile)
+FileUtils.chmod(0644, msgfile)
