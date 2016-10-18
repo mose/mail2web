@@ -68,7 +68,11 @@ end
 if mail.multipart?
   content = mail.html_part.body.to_s
 else
-  content = to_html(mail.body.to_s)
+  if mail.content_type.split(';')[0] == 'text/html'
+    content = mail.body.to_s
+  else
+    content = to_html(mail.body.to_s)
+  end
 end
 
 data[keystamp] = {
