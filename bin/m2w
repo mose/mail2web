@@ -33,7 +33,7 @@ end
 
 unless dirs.include?(datestamp)
   dirs.push datestamp
-  dirs.sort
+  dirs.sort!.reverse!
   File.open(dirfile, 'w') do |f|
     f.write(dirs.to_json)
   end
@@ -77,7 +77,7 @@ data[keystamp] = {
   from: mail.from.first,
   subject: mail.subject
 }
-data = data.sort.to_h
+data = data.sort.reverse.to_h
 
 File.open(storefile, 'w') do |f|
   f.write(data.to_json)
