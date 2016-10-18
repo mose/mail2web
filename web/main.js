@@ -12,28 +12,30 @@ function show_dir(focus) {
     el.parentNode.removeChild(el);
   });
   var ulwrap = document.createElement('ul');
-  fetch('json/' + focus.id + '.json').
-    then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        return {};
-      }
-    }).
-    then(els => {
-      Array.prototype.forEach.call(Object.keys(els), (item, k) => {
-        var it = els[item];
-        var itemli = document.createElement('li');
-        var itemlink = document.createElement('a');
-        itemlink.href = 'mails/' + it.id + '.html';
-        itemlink.target = 'content';
-        itemlink.textContent = it.subject;
-        itemlink.title = it.date + ' from ' + it.from;
-        itemli.appendChild(itemlink);
-        ulwrap.appendChild(itemli);
-      });
-      focus.appendChild(ulwrap);
+  fetch('json/' + focus.id + '.json', {
+    credentials: 'include'
+  }).
+  then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      return {};
+    }
+  }).
+  then(els => {
+    Array.prototype.forEach.call(Object.keys(els), (item, k) => {
+      var it = els[item];
+      var itemli = document.createElement('li');
+      var itemlink = document.createElement('a');
+      itemlink.href = 'mails/' + it.id + '.html';
+      itemlink.target = 'content';
+      itemlink.textContent = it.subject;
+      itemlink.title = it.date + ' from ' + it.from;
+      itemli.appendChild(itemlink);
+      ulwrap.appendChild(itemli);
     });
+    focus.appendChild(ulwrap);
+  });
 }
 
 function build_nav(els) {
@@ -57,16 +59,18 @@ function build_nav(els) {
 
 ready( () => {
 
-  fetch('json/dirs.json').
-    then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        return [];
-      }
-    }).
-    then(els => {
-      build_nav(els);
-    })
+  fetch('json/dirs.json', {
+    credentials: 'include'
+  }).
+  then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      return [];
+    }
+  }).
+  then(els => {
+    build_nav(els);
+  })
 
 });
