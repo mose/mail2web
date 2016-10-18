@@ -31,6 +31,9 @@ function show_dir(focus) {
       itemlink.target = 'content';
       itemlink.textContent = it.subject;
       itemlink.title = it.date + ' from ' + it.from;
+      itemlink.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+      });
       itemli.appendChild(itemlink);
       ulwrap.appendChild(itemli);
     });
