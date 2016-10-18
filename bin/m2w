@@ -11,9 +11,6 @@ DATE_FORMAT = "%Y-%W"
 KEY_FORMAT = "%F %T"
 BASEDIR = File.expand_path(File.join(__FILE__, '../../'))
 
-puts BASEDIR
-exit 0
-
 content = ARGF.read
 tmpfile = Tempfile.new('mail-')
 tmpfile.write content
