@@ -20,7 +20,7 @@ msgfile = File.join(BASEDIR, "web/mails/#{message}.html")
 if File.exists? msgfile
   # File.unlink msgfile
   Dir.glob('web/json/*.json').each do |f|
-    buff = JSON.parse(File.read storefile)
+    buff = JSON.parse(File.read f)
     buff.each do |entry|
       ap entry
     end
