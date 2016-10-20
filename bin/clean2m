@@ -29,6 +29,7 @@ end
 
 exit 0
 
+
 datestamp = mail.date.strftime DATE_FORMAT
 keystamp = mail.date.strftime KEY_FORMAT
 storefile = File.join(BASEDIR, "web/json/#{datestamp}.json")
