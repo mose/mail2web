@@ -12,7 +12,7 @@ KEY_FORMAT = "%F %T"
 BASEDIR = File.expand_path(File.join(__FILE__, '../../'))
 
 
-message = File.basename(URL(ARGV[0]).path, '.html')
+message = File.basename(URI(ARGV[0]).path, '.html')
 
 msgfile = File.join(BASEDIR, "web/mails/#{message}.html")
 
