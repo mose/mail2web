@@ -34,7 +34,6 @@ if File.exists? msgfile
       File.open(f, 'w') do |f|
         f.write(buff.to_json)
       end
-    else
     end
 
   end
